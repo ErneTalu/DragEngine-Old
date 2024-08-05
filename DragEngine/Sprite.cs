@@ -16,11 +16,11 @@ namespace DragEngine
         public Color color = Color.Black;
         
 
-        public Sprite() : base()
+        public Sprite(Color color, SpriteType type = SpriteType.Quad, Image image = null) : base()
         {
-            this.color = Color.Red;
-            this.type = SpriteType.Quad;
-            this.image = null;
+            this.color = color;
+            this.type = type;
+            this.image = image;
         }
 
     }

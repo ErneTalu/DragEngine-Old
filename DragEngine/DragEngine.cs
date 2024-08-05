@@ -69,7 +69,8 @@ namespace DragEngine
 
             for (int i = 0; i < varObjects.Count; i++)
             {
-                Render.Add(varObjects[i].GetProp<Sprite>());
+                if (varObjects[i].GetProp<Sprite>() != null)
+                    Render.Add(varObjects[i].GetProp<Sprite>());
             }
 
             foreach (Sprite s in Render)

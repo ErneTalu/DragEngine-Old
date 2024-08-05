@@ -20,7 +20,7 @@ namespace DragEngine
             SetRoom();
 
             varObject = new VarObject(Vector2.zero, new Vector2(50,50));
-            sprite = varObject.AddProp<Sprite>();
+            sprite = varObject.AddProp<Sprite>(Color.Red, SpriteType.Circle);
         }
 
         public void SetRoom()

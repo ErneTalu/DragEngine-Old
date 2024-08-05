@@ -14,29 +14,32 @@ namespace DragEngine
     {
         public static T AddProp<T>(this VarObject varObject, params object[] constructorArgs) where T : prop
         {
-            ConstructorInfo constructor = typeof(T).GetConstructor(
-                BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic,
-                null,
-                constructorArgs.Select(arg => arg.GetType()).ToArray(),
-                null);
+            ConstructorInfo[] constructors = typeof(T).GetConstructors();
 
-            if (constructor == null)
+            if (constructors.Length == 0)
+                throw new InvalidOperationException("No constructors found for type " + typeof(T).FullName);
+
+            ConstructorInfo constructor = constructors[0]; 
+            ParameterInfo[] parameters = constructor.GetParameters();
+            object[] args = new object[parameters.Length];
+
+            for (int i = 0; i < parameters.Length; i++)
             {
-                constructor = typeof(T).GetConstructor(Type.EmptyTypes);
-                if (constructor == null)
+                if (i < constructorArgs.Length)
                 {
-                    throw new InvalidOperationException($"The type {typeof(T).Name} must have a constructor with the specified parameters or a parameterless constructor.");
+                    args[i] = constructorArgs[i];
                 }
-                T newProp = (T)constructor.Invoke(null);
-                newProp.varObject = varObject; 
-                varObject.props.Add(newProp);
-                return newProp;
+                else
+                {
+                    args[i] = parameters[i].DefaultValue;
+                }
             }
 
-            T newPropWithArgs = (T)constructor.Invoke(constructorArgs);
-            newPropWithArgs.varObject = varObject; 
-            varObject.props.Add(newPropWithArgs);
-            return newPropWithArgs;
+            T newProp = (T)constructor.Invoke(args);
+            newProp.varObject = varObject;
+            varObject.props.Add(newProp);
+
+            return newProp;
         }
         public static T GetProp<T>(this VarObject varObject) where T : prop
         {
