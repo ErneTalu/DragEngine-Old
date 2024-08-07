@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace DragEngine
 {
-    public class prop
+    public class Prop
     {
         public VarObject varObject;
 
@@ -12,7 +12,7 @@ namespace DragEngine
 
     public static class propUtils
     {
-        public static T AddProp<T>(this VarObject varObject, params object[] constructorArgs) where T : prop
+        public static T AddProp<T>(this VarObject varObject, params object[] constructorArgs) where T : Prop
         {
             ConstructorInfo[] constructors = typeof(T).GetConstructors();
 
@@ -41,7 +41,17 @@ namespace DragEngine
 
             return newProp;
         }
-        public static T GetProp<T>(this VarObject varObject) where T : prop
+        public static void RemoveProp<T>(this VarObject varObject, params object[] constructorArgs) where T : Prop
+        {
+            foreach (var item in varObject.props)
+            {
+                if (item is T)
+                {
+                    varObject.props.Remove(item);
+                }
+            }
+        }
+        public static T GetProp<T>(this VarObject varObject) where T : Prop
         {
             foreach (var item in varObject.props)
             {

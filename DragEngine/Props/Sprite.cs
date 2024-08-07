@@ -5,10 +5,10 @@ namespace DragEngine
 {
     public enum SpriteType
     {
-        Quad, Image, Circle
+        Quad, Circle, Image
     };
 
-    public class Sprite : prop
+    public class Sprite : Prop
     {
         public SpriteType type;
         public Image image;
@@ -22,6 +22,9 @@ namespace DragEngine
             this.type = type;
             this.image = image;
         }
+
+        public void FlipImageY() => image.RotateFlip(RotateFlipType.Rotate180FlipY);
+        public void FlipImageX() => image.RotateFlip(RotateFlipType.Rotate180FlipX);
 
     }
 }

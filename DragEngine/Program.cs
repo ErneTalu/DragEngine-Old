@@ -4,7 +4,7 @@
     {
         static void Main(string[] args)
         {
-            Test g = new Test();
+            PingPong g = new PingPong();
         }
     }
 }

@@ -4,21 +4,19 @@ namespace DragEngine
 {
     public class VarObject
     {
+        public string name;
+
         public Vector2 position, scale;
 
-        public List<prop> props = new List<prop>();
-        public prop prop;
+        public List<Prop> props = new List<Prop>();
 
-        public string tag;
-
-        public VarObject(Vector2 position, Vector2 scale)
+        public VarObject(Vector2 position, Vector2 scale, string name = null)
         {
             this.position = position;
             this.scale = scale;
+            this.name = name;
             DragEngine.RegisterVarObject(this);
         }
-
-
 
     }
 }

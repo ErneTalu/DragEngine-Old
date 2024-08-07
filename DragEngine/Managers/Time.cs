@@ -9,10 +9,13 @@ namespace DragEngine
         private static float lastUpdateTime;
 
         public static float deltaTime { get; private set; }
+        public static float time { get; private set; }
 
         public static void Update()
         {
             float currentTime = (float)stopwatch.Elapsed.TotalSeconds * 6;
+
+            time = currentTime;
             deltaTime = currentTime - lastUpdateTime;
             lastUpdateTime = currentTime;
         }

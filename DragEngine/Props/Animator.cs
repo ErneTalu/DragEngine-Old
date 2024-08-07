@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace DragEngine
 {
-    public class Animator
+    public class Animator : Prop
     {
         public Dictionary<string, Animation> animations = new Dictionary<string,Animation>();
 

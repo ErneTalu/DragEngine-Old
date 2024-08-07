@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 
 namespace DragEngine
 {
-    public class Animation
+    public class Animation : Prop
     {
         List<Image> frames = new List<Image>();
         int increment, delayCount = 0;

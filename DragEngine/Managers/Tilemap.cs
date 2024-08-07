@@ -36,9 +36,9 @@ namespace DragEngine
                     Bitmap tileBitmap = GetTileBitmap(x % tileCols, y % tileRows);
 
                     Vector2 position = new Vector2(x * TileWidth, y * TileHeight);
-                    //Sprite tileSprite = new Sprite(position, new Vector2(TileWidth, TileHeight), Color.White, $"tile_{x}_{y}", false, SpriteType.Image, tileBitmap);
+                    Sprite tileSprite = new VarObject(position, new Vector2(TileWidth, TileHeight)).AddProp<Sprite>(Color.White, SpriteType.Image, tileBitmap);
 
-                    //Tiles[x, y] = tileSprite;
+                    Tiles[x, y] = tileSprite;
                 }
             }
         }
