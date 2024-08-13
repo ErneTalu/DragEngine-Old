@@ -2,7 +2,7 @@
 
 namespace DragEngine
 {
-    public class Text : Prop
+    public class Text : Prop, UI
     {
         public string text = "New Text";
         public Font font;

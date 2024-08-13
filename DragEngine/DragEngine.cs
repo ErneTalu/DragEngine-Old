@@ -55,7 +55,6 @@ namespace DragEngine
                         FixedUpdate();
                         nextFixedUpdate = DateTime.Now.AddMilliseconds(FixedUpdateRate);
                     }
-                    Physics();
                     Update();
                     LateUpdate();
                     Thread.Sleep(1);
@@ -69,7 +68,21 @@ namespace DragEngine
             if (varObject != null)
                 varObjects.Add(varObject);
         }
-        
+        public static VarObject GetVarObject(string name)
+        {
+            foreach (VarObject v in varObjects)
+                if (v.name == name) return v;
+
+            return null;
+        }
+        public static void Each<T>(IEnumerable<T> collection, Action<T> action)
+        {
+            foreach (T item in collection)
+            {
+                action(item);
+            }
+        }
+
         private void Renderer(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;    
@@ -81,11 +94,11 @@ namespace DragEngine
 
             for (int i = 0; i < varObjects.Count; i++)
             {
-                if (varObjects[i].GetProp<Sprite>() != null)
-                    renderSprites.Add(varObjects[i].GetProp<Sprite>());
+                if (varObjects[i].TryGetProp(out Sprite sprite))
+                    renderSprites.Add(sprite);
 
-                if (varObjects[i].GetProp<Text>() != null)
-                    renderTexts.Add(varObjects[i].GetProp<Text>());
+                if (varObjects[i].TryGetProp(out Text text))
+                    renderTexts.Add(text);
             }
 
             foreach (Sprite s in renderSprites)
@@ -105,14 +118,12 @@ namespace DragEngine
         {
             foreach (VarObject v in varObjects)
             {
-                Physics p = v.GetProp<Physics>();
-
-                if (p != null)
+                if (v.TryGetProp(out Physics p))
                 {
                     if (p.gravity == false && p.velocity == Vector2.zero) 
                         return;
 
-                    v.GetProp<Physics>().Update();
+                    p.Update();
                 }
             }
         }

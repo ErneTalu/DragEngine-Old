@@ -13,25 +13,42 @@ namespace DragEngine
 
         public static float GetAxis(string axisName)
         {
-            if (axisName == "Horizontal") return GetNormalizedAxis(HorizontalKeys);
-            else if (axisName == "Vertical") return GetNormalizedAxis(VerticalKeys);
-            else if (axisName == "Horizontal2") return GetNormalizedAxis(Horizontal2Keys);
-            else if (axisName == "Vertical2") return GetNormalizedAxis(Vertical2Keys);
-            else if (axisName == "Jump") return GetNormalizedAxis(JumpKeys);
+            switch (axisName)
+            {
+                case "Horizontal": return GetNormalizedAxis(HorizontalKeys);
+                case "Vertical": return GetNormalizedAxis(VerticalKeys);
+                case "Horizontal2": return GetNormalizedAxis(Horizontal2Keys);
+                case "Vertical2": return GetNormalizedAxis(Vertical2Keys);
+                case "Jump": return GetNormalizedAxis(JumpKeys);
+            }
             return 0f;
         }
         public static float GetAxisRaw(string axisName)
         {
-            if (axisName == "Horizontal") return GetAxisFromKeys(HorizontalKeys);
-            else if (axisName == "Vertical") return GetAxisFromKeys(VerticalKeys);
-            else if (axisName == "Horizontal2") return GetAxisFromKeys(Horizontal2Keys);
-            else if (axisName == "Vertical2") return GetAxisFromKeys(Vertical2Keys);
-            else if (axisName == "Jump") return GetAxisFromKeys(JumpKeys);
+            switch (axisName)
+            {
+                case "Horizontal": return GetAxisFromKeys(HorizontalKeys);
+                case "Vertical": return GetAxisFromKeys(VerticalKeys);
+                case "Horizontal2": return GetAxisFromKeys(Horizontal2Keys);
+                case "Vertical2": return GetAxisFromKeys(Vertical2Keys);
+                case "Jump": return GetAxisFromKeys(JumpKeys);
+            }
             return 0f;
         }
 
         public static bool GetKeyDown(Key key) { return (Keyboard.GetKeyStates(key) & KeyStates.Down) > 0; }
         public static bool GetKeyDown(string key) { Enum.TryParse(key, true, out Key result); return (Keyboard.GetKeyStates(result) & KeyStates.Down) > 0; }
+
+        public static bool GetMouseButtonDown(int button)
+        {
+            switch (button)
+            {
+                case 0: return Mouse.LeftButton > 0;
+                case 1: return Mouse.RightButton > 0;
+                case 2: return Mouse.MiddleButton > 0;
+            }
+            return false;
+        }
 
         private static float GetAxisFromKeys(Key[] keys)
         {
@@ -48,7 +65,6 @@ namespace DragEngine
 
             return axisValue;
         }
-
         private static float GetNormalizedAxis(Key[] keys)
         {
             float axisValue = 0f;

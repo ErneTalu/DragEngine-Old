@@ -16,9 +16,9 @@ namespace DragEngine
         public Color color = Color.Black;
         
 
-        public Sprite(Color color, SpriteType type = SpriteType.Quad, Image image = null) : base()
+        public Sprite(Color color = default, SpriteType type = SpriteType.Quad, Image image = null) : base()
         {
-            this.color = color;
+            this.color = color == default ? Color.Black : color;
             this.type = type;
             this.image = image;
         }

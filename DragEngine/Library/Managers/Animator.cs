@@ -1,10 +1,8 @@
-﻿
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace DragEngine
 {
-    public class Animator : Prop
+    public class Animator 
     {
         public Dictionary<string, Animation> animations = new Dictionary<string,Animation>();
 
