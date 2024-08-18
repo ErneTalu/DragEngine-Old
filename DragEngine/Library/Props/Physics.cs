@@ -6,18 +6,20 @@ namespace DragEngine
     public class Physics : Prop
     {
         public Vector2 velocity, collPos, checkPos = Vector2.zero;
-        public VarObject collObject = null;
+        public VarObject collObject, checkObject = null;
         public PhysicMat physicMat = null;
 
         public bool hasCollider => varObject.GetProp<Collider>() != null;
-        public bool gravity;
+        public bool gravity = false;
+        public float drag = 0.1f;
         public int mass;
 
         public Action OnCollEnter, OnCollExit;
-        public Physics(bool gravity = false, int mass = 1) : base()
+        public Physics(bool gravity = false, int mass = 1, float drag = 1f) : base()
         {
             this.gravity = gravity;
             this.mass = mass;
+            this.drag = drag;
             velocity = Vector2.zero;
             collPos = Vector2.zero;
         }
@@ -29,13 +31,18 @@ namespace DragEngine
             ApplyVelocity(velocity);
             Gravity();
             PhysicMaterial();
+            if (gravity)
+                ApplyDrag();
         }
+
 
         void ApplyVelocity(Vector2 movement)
         {
             Vector2 resolvedMovement = movement;
-            collObject = null;
             checkPos = collPos;
+            checkObject = collObject;
+
+            collObject = null;
             collPos = Vector2.zero;
 
             foreach (VarObject v in DragEngine.varObjects)
@@ -59,6 +66,17 @@ namespace DragEngine
 
             varObject.position += resolvedMovement;
         }
+        void ApplyDrag()
+        {
+            if (velocity.x != 0)
+            {
+                float dragForce = velocity.x * drag * 10;
+                velocity.x -= dragForce * Time.deltaTime;
+
+                if (Math.Abs(velocity.x) < 0.01f) velocity.x = 0; 
+            }
+        }
+
         void FixVelocity()
         {
             if (collPos.x == 1 && velocity.x > 0) velocity.x = 0;
@@ -141,14 +159,14 @@ namespace DragEngine
                 if (collPos.x != 0)
                 {
                     if (physicMat.bounciness > 0) velocity.x = -velocity.x * physicMat.bounciness;
-                    if (physicMat.friction > 0) velocity.x *= (1 - physicMat.friction);
                 }
                 if (collPos.y != 0)
                 {
                     if (physicMat.bounciness > 0) velocity.y = -velocity.y * physicMat.bounciness;
-                    if (physicMat.friction > 0) velocity.y *= (1 - physicMat.friction);
                 }
             }
+
+            Debug.Log(velocity);
         }
 
         public void IncreaseVelocity(Vector2 amount)

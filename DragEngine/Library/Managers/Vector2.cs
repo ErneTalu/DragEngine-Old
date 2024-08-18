@@ -5,7 +5,9 @@ namespace DragEngine
 {
     public class Vector2
     {
-        public float x, y;
+        public float x = 0; 
+        public float y = 0;
+
         public float Length()
         {
             return (float)Math.Sqrt(x * x + y * y);

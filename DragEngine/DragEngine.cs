@@ -82,6 +82,10 @@ namespace DragEngine
                 action(item);
             }
         }
+        public static void Destroy(ref object Object)
+        {
+            Object = null;
+        }
 
         private void Renderer(object sender, PaintEventArgs e)
         {
@@ -138,5 +142,7 @@ namespace DragEngine
     public static class Debug
     {
         public static void Log(object message) => Console.WriteLine(message);
+        public static void LogWarning(object message) => Console.WriteLine("Warning : " + message);
+        public static void LogError(object message) => Console.WriteLine("Error : "+ message);
     }
 }

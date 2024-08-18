@@ -1,4 +1,5 @@
-﻿using FarseerPhysics.Dynamics;
+﻿using FarseerPhysics.Common;
+using FarseerPhysics.Dynamics;
 using System;
 using System.Drawing;
 
@@ -83,11 +84,11 @@ namespace DragEngine
             float horInput = Input.GetAxis("Horizontal");
 
             Vector2 movement = new Vector2(horInput, 0).normalized * speed * Time.deltaTime;
-            player.physics.Move(movement);
 
             if (Input.GetKeyDown("Space") && player.physics.checkPos.y == -1) player.physics.AddForce(new Vector2(0, -8));
-            if (Input.GetMouseButtonDown(0)) Debug.Log("left clicked");
+            player.physics.velocity += movement;
 
+            Debug.Log(player.physics.collPos);
             player.physics.Update();
 
             if (player.physics.collObject != null && player.physics.collObject.name == "flag") End();

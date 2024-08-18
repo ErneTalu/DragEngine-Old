@@ -1,5 +1,6 @@
 ﻿
 using System.Collections.Generic;
+using System.Drawing;
 
 namespace DragEngine
 {
@@ -28,6 +29,33 @@ namespace DragEngine
             }
 
             return tiles;
+        }
+
+        public static void LoadMapFromImage(Bitmap image)
+        {
+            string[,] map = new string[image.Height, image.Width];
+
+            for (int y = 0; y < image.Height; y++)
+            {
+                for (int x = 0; x < image.Width; x++)
+                {
+                    Color pixelColor = image.GetPixel(x, y);
+                    string tileName = GetTileNameFromColor(pixelColor);
+                    map[y, x] = tileName;
+                }
+            }
+
+            AddMap(map);
+        }
+
+        private static string GetTileNameFromColor(Color color)
+        {
+            if (color == Color.Red) return "g";
+            if (color == Color.Blue) return "p";
+            if (color == Color.Gray) return "f";
+            if (color == Color.Yellow) return "e";
+            if (color == Color.Black) return "a"; 
+            return ""; 
         }
     }
 }
